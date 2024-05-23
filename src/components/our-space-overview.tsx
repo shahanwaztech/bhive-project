@@ -17,6 +17,7 @@ import Image6 from "../../public/our-space-overview/6.png";
 import LocationArrow from "../../public/our-space-overview/location-arrow.svg";
 import GoArrow from "../../public/our-space-overview/go-arrow.svg";
 import {useRouter} from "next/navigation";
+import {motion} from "framer-motion";
 
 interface PropsObject {
     id: number,
@@ -122,26 +123,65 @@ const OurSpaceOverviewObject: PropsObject[] = [
 const OurSpaceOverview: React.FC<any> = () => {
 
     const router = useRouter();
+    const MotionImage = motion(Image);
 
     return (
         <section
             className="w-[100%] h-[100%] pt-[10px] md:pt-[40px] md:max-w-[1440px] flex flex-col items-start justify-start px-[20px] md:px-[40px]">
             <div
                 className="flex w-[100%] flex-row md:items-start md:justify-start items-center justify-between md:pt-0 md:pb-0 pt-[20px] pb-[30px]">
-                <h1 className="text-[#263238] font-bold md:text-[36px] text-[24px]">Our Space Overview</h1>
-                <Image src={ArrowIcon} alt={'arrow-icon'} className="w-[24px] h-auto block md:hidden object-fill"/>
+                <motion.h1
+                    initial={{x:-20,opacity:0}}
+                    whileInView={{x:0,opacity:1}}
+                    viewport={{once: true}}
+                    transition={{
+                        duration: 0.1,
+                        ease: 'easeOut',
+                        type: 'spring',
+                        damping: 6,
+                        stiffness: 100,
+                        delay: 0.25
+                    }}
+                    className="text-[#263238] font-bold md:text-[36px] text-[24px]">Our Space Overview</motion.h1>
+                <MotionImage
+                    initial={{x:20,opacity:0}}
+                    whileInView={{x:0,opacity:1}}
+                    viewport={{once: true}}
+                    transition={{
+                        duration: 0.1,
+                        ease: 'easeOut',
+                        type: 'spring',
+                        damping: 6,
+                        stiffness: 100,
+                        delay: 0.25
+                    }}
+                    src={ArrowIcon} alt={'arrow-icon'} className="w-[24px] h-auto block md:hidden object-fill"/>
             </div>
             <div
                 className="grid grid-cols-1 md:grid-cols-3  w-[100%]  pt-0 pb-[10px] py-0 md:py-[20px] gap-[16px] md:gap-[45px]">
                 {OurSpaceOverviewObject.map((item) => {
                     return (
-                        <div key={item.id} onClick={() => router.push(`${item.href}`)}
+                        <motion.div
+                            key={item.id}
+                            initial={{x:-20,opacity:0}}
+                            whileInView={{x:0,opacity:1}}
+                            viewport={{once: true}}
+                            transition={{
+                                duration: 0.05*item.id,
+                                ease: 'easeOut',
+                                type: 'spring',
+                                damping: 6,
+                                stiffness: 100,
+                                delay: 0.15*item.id
+                            }}
+                            onClick={() => router.push(`${item.href}`)}
                              className="p-[12px] border-[#EEE7E7] cursor-pointer border-[1.08px] bg-white rounded-[8px]">
                             <div className="flex flex-row items-center pb-[16px] justify-between">
                                 <h1 className="text-[18px] md:text-[20px] font-semibold text-[#263238] mr-[30px]">{item.name}</h1>
                                 <div
                                     className="px-[15px] py-[7px] gap-[8px] bg-[#F9F9F9] border-[#EEE7E7] border-[0.47px] rounded-[6.47px] flex flex-col items-center justify-center">
-                                    <Image src={LocationArrow} alt='icon' className="w-[15px] md:w-[18px] h-[15px] md:h-[18px]"/>
+                                    <Image src={LocationArrow} alt='icon'
+                                           className="w-[15px] md:w-[18px] h-[15px] md:h-[18px]"/>
                                     <span
                                         className="text-[#263238] opacity-50 text-[7.46px] md:text-[8px] font-medium">{item.range}Kms</span>
                                 </div>
@@ -153,35 +193,43 @@ const OurSpaceOverview: React.FC<any> = () => {
                                     className="bg-gradient absolute rounded-[5px] px-[8px] py-[5px] items-center top-[10px] left-[10px] flex flex-row gap-[8px]">
                                     <Image src={item.tag.tagIcon} alt={item.tag.tagName}
                                            className="w-[20px] h-[20px] md:w-[25px] md:h-[25px] object-cover"/>
-                                    <span className="text-[#FFBB00] text-[12px] md:text-[14px] font-medium">{item.tag.tagName}</span>
+                                    <span
+                                        className="text-[#FFBB00] text-[12px] md:text-[14px] font-medium">{item.tag.tagName}</span>
                                 </div>
                             </div>
-                            <div className="pt-[22px] flex flex-row gap-[6px] md:gap-[12px] items-center justify-between">
-                                <div className="flex w-[100%] rounded-[6px] flex-row justify-between items-center px-[12px] py-[8px] bg-[#F9F9F9] border-[#EEE7E7] border-[0.5px]">
+                            <div
+                                className="pt-[22px] flex flex-row gap-[6px] md:gap-[12px] items-center justify-between">
+                                <div
+                                    className="flex w-[100%] rounded-[6px] flex-row justify-between items-center px-[12px] py-[8px] bg-[#F9F9F9] border-[#EEE7E7] border-[0.5px]">
                                     <div className="flex flex-col gap-[8px]">
-                                        <span className="text-[#65624C] text-[12px] md:text-[14px] font-medium">Day Pass</span>
+                                        <span
+                                            className="text-[#65624C] text-[12px] md:text-[14px] font-medium">Day Pass</span>
                                         <div className="flex flex-row items-center">
                                             <h1 className="text-[#263238] text-[18px] md:text-[20px] font-semibold">₹{item.dayPassAmount}</h1>
-                                            <span className="text-[#263238] opacity-80 font-medium text-[11px] md:text-[12px]"> / Day</span>
+                                            <span
+                                                className="text-[#263238] opacity-80 font-medium text-[11px] md:text-[12px]"> / Day</span>
                                         </div>
                                     </div>
-                                    <Image src={GoArrow} alt={'icon'} className="w-[21px] h-[12px] object-fill" />
+                                    <Image src={GoArrow} alt={'icon'} className="w-[21px] h-[12px] object-fill"/>
                                 </div>
-                                <div className="w-[100%] relative rounded-[6px] flex flex-row justify-between items-center px-[12px] py-[8px] bg-[#FFCF4B] border-[#FFC422] border-[1px]">
+                                <div
+                                    className="w-[100%] relative rounded-[6px] flex flex-row justify-between items-center px-[12px] py-[8px] bg-[#FFCF4B] border-[#FFC422] border-[1px]">
                                     <div className="flex flex-col gap-[8px]">
                                         <span className="text-[#65624C] text-[12px] md:text-[14px] font-medium">Bulk Pass</span>
                                         <div className="flex flex-row items-center">
                                             <h1 className="text-[#263238] text-[18px] md:text-[20px] font-semibold">₹{item.bukPassAmount}</h1>
-                                            <span className="text-[#263238] opacity-80 font-medium text-[11px] md:text-[12px]"> / 10 Days</span>
+                                            <span
+                                                className="text-[#263238] opacity-80 font-medium text-[11px] md:text-[12px]"> / 10 Days</span>
                                         </div>
                                     </div>
-                                    <Image src={GoArrow} alt={'icon'} className="w-[21px] h-[12px] object-fill" />
-                                    <div className="absolute px-[8px] py-[4px] top-[-13px] left-[30%] flex items-center justify-center bg-[#263238] rounded-[3px]">
+                                    <Image src={GoArrow} alt={'icon'} className="w-[21px] h-[12px] object-fill"/>
+                                    <div
+                                        className="absolute px-[8px] py-[4px] top-[-13px] left-[30%] flex items-center justify-center bg-[#263238] rounded-[3px]">
                                         <span className="text-[8px] font-medium text-[#FFFDF7]">{item.discount}% Discount</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     )
                 })}
             </div>
